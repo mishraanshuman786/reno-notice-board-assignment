@@ -28,7 +28,7 @@ model Notice{
   id               Int           @id @default(autoincrement())
   title           String 
   body            String          @db.Text
-  catgeory        Category        @default(GENERAL)
+  category        Category        @default(GENERAL)
   priority        Priority        @default(NORMAL)
   publishDate     DateTime
   image           String?
