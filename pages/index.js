@@ -1,4 +1,3 @@
-import Image from "next/image";
 import localFont from "next/font/local";
 import { FaClipboardList } from "react-icons/fa";
 import { useEffect,useState } from "react";
