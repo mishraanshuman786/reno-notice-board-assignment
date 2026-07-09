@@ -1,6 +1,6 @@
 import Image from "next/image";
 import localFont from "next/font/local";
-
+import { FaClipboardList } from "react-icons/fa";
 import { useEffect,useState } from "react";
 import Link from "next/link";
 import NoticeCard from "@/components/NoticeCard";
@@ -46,9 +46,10 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Notice Board</h1>
-          <Link href="/notices/new" className="bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition" >
-          * Add Notice</Link>
+         
+          <h1 className="text-2xl font-bold flex items-center justify-center gap-1 text-gray-900"><FaClipboardList /> Notice Board</h1>
+          <Link href="/notices/new" className="bg-gray-600 flex items-center justify-center text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition" >
+          + Add Notice</Link>
         </div>
 
         {loading && <p className="text-gray-500 ">Loading notices...</p>}

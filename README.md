@@ -1,40 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+# Notice Board
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A full CRUD Notice Board built with Next.js (Pages Router) and Prisma, backed by a hosted PostgreSQL database, deployed on Vercel.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live Links
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- **Live app:** <PASTE_YOUR_VERCEL_URL_HERE>
+- **GitHub repository:** <PASTE_YOUR_GITHUB_REPO_URL_HERE>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Tech Stack
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- **Framework:** Next.js (Pages Router)
+- **Database access:** Prisma ORM
+- **Database:** PostgreSQL (Supabase, free tier)
+- **Styling:** Tailwind CSS
+- **Hosting:** Vercel (Hobby/free tier)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- List all notices as responsive cards (stacked on mobile, grid on desktop)
+- Create and edit notices through a single shared form
+- Delete notices with a confirmation step before removal
+- Server-side validation on all write operations — required fields and a valid date are enforced inside the API routes, not just in the browser
+- Urgent notices always sort above Normal notices, done via Prisma's `orderBy` at the database level (not sorted client-side), with a red "Urgent" badge
+- Optional image URL per notice
 
-To learn more about Next.js, take a look at the following resources:
+## How to Run Locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository and install dependencies:**
+   ```bash
+   git clone <YOUR_REPO_URL>
+   cd notice-board
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. **Set up the database connection.** Create a `.env` file in the project root:
+   ```
+   DATABASE_URL="postgresql://USER:PASSWORD@HOST/DBNAME?sslmode=require"
+   ```
+   Get this connection string from a free hosted Postgres provider such as [Neon](https://neon.tech) — sign up, create a project, and copy the connection string from the dashboard.
 
-## Deploy on Vercel
+3. **Push the Prisma schema to the database:**
+   ```bash
+   npx prisma db push
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Generate the Prisma client** (usually automatic via `postinstall`, but run manually if needed):
+   ```bash
+   npx prisma generate
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. **Start the dev server:**
+   ```bash
+   npm run dev
+   ```
+   Visit [http://localhost:3000](http://localhost:3000)
+
+## API Routes
+
+| Route                | Method | Purpose                        |
+|----------------------|--------|---------------------------------|
+| `/api/notices`       | GET    | List all notices (Urgent first) |
+| `/api/notices`       | POST   | Create a notice                 |
+| `/api/notices/:id`   | GET    | Fetch a single notice           |
+| `/api/notices/:id`   | PUT    | Update a notice                 |
+| `/api/notices/:id`   | DELETE | Delete a notice                 |
+
+All write routes validate required fields (`title`, `body`, `publishDate`) and enum values (`category`, `priority`) on the server before touching the database.
+
+## One Thing I Would Improve With More Time
+
+I would make the API calling layer more organized and manageable — right now components call `fetch` directly inside handlers. With more time, I'd introduce a proper API service layer (using Axios) with separate functions per resource (e.g. `noticeApi.create()`, `noticeApi.update()`, `noticeApi.delete()`), and structure the backend similarly with dedicated controller-style functions instead of putting all logic directly inside the route handlers. This would make the codebase easier to test, extend, and reason about as it grows.
+
+## Where and How AI Was Used
+
+I generally work with TypeORM, so Prisma's schema-first workflow and query API were new to me for this project. I used Claude to:
+- Understand how Prisma works and how it differs from TypeORM (schema definition, `prisma generate`, `prisma db push`, and the generated client's query patterns), so I could get up to speed quickly.
+- Understand the assignment requirements faster and more clearly — especially the specifics around server-side ordering (Urgent-first via `orderBy`) and where server-side validation needed to live.
+- Scaffold the initial project structure as a reference (Prisma schema, API routes, pages/components), which I then went through, typed out, and adapted myself.
+- Debug issues I ran into while coding and setting up — including Prisma client generation errors, database connection string/SSL formatting across different providers, and a few typos in my own schema and component code.
+
+All functionality was reviewed, tested locally, and understood by me before committing — including verifying the create/edit/delete flow, server-side validation, and the Urgent-first ordering logic in the API routes.
+
+## Checklist Before Submitting
+
+- [ ] Vercel app is public and opens without logging in
+- [ ] GitHub repository is public and opens without logging in
+- [ ] GitHub repository has real, incremental commit history (not a single commit)
+- [ ] Both links are submitted using the link provided in the assignment email
