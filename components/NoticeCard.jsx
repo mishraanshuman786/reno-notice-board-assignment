@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
-import Image from "next/image";
+
 
 export default function NoticeCard({ notice, onDeleted }) {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function NoticeCard({ notice, onDeleted }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 flex flex-col gap-3 h-full">
       {notice.image ? (
-        <Image
+         <img
           src={notice.image}
           alt={notice.title}
           className="w-full h-32 sm:h-36 object-cover rounded-lg"
