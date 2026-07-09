@@ -6,8 +6,8 @@ A full CRUD Notice Board built with Next.js (Pages Router) and Prisma, backed by
 
 ## Live Links
 
-- **Live app:** <PASTE_YOUR_VERCEL_URL_HERE>
-- **GitHub repository:** <PASTE_YOUR_GITHUB_REPO_URL_HERE>
+- **Live app:** https://reno-notice-board-assignment-delta.vercel.app/
+- **GitHub repository:** https://github.com/mishraanshuman786/reno-notice-board-assignment
 
 ## Tech Stack
 
@@ -37,9 +37,10 @@ A full CRUD Notice Board built with Next.js (Pages Router) and Prisma, backed by
 
 2. **Set up the database connection.** Create a `.env` file in the project root:
    ```
-   DATABASE_URL="postgresql://USER:PASSWORD@HOST/DBNAME?sslmode=require"
+   DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DBNAME?sslmode=require"
+   
    ```
-   Get this connection string from a free hosted Postgres provider such as [Neon](https://neon.tech) — sign up, create a project, and copy the connection string from the dashboard.
+   Get this connection string from a free hosted Postgres provider — sign up, create a project, and copy the connection string from the dashboard.
 
 3. **Push the Prisma schema to the database:**
    ```bash
